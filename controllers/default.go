@@ -13,3 +13,8 @@ func (c *MainController) Get() {
 	c.Data["Content"] = "https://github.com/VampireMao/pic_web.git"
 	c.TplName = "main/index.html"
 }
+
+func (c *MainController) Post() {
+	println(c.Ctx.Request.URL.Path)
+	println(c.Ctx.Request.Host)
+}
