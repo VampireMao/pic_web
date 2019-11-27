@@ -97,7 +97,7 @@
         table.on('tool(test)', function (obj) {
             switch (obj.event) {
                 case 'del':
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除么', function (index) {
                         layer.close(index);
                         $.ajax({
                             url: '/admin/user-delete',
@@ -121,41 +121,44 @@
                         });
                     });
                     break;
-                case 'editUserName':
+                case 'editEnName':
                     layer.prompt({
                         formType: 0,
-                        title: '修改' + obj.data.UserName,
-                        value: obj.data.UserName
+                        title: `修改${obj.data.ZhName}`,
+                        value: obj.data.EnName
                     }, function (value, index) {
-                        layer.close(index);
-                        $.ajax({
-                            url: '/admin/user-edit',
-                            dataType: 'JSON',
-                            method: 'POST',
-                            data: {
-                                UserId: obj.data.UserId,
-                                UserName: value,
-                                cols: "UserName"
+                        post(function () {
+                                obj.update({EnName: value});
                             },
-                            success: function (data) {
-                                if (data.msg === "OK") {
-                                    layer.alert("修改成功", {
-                                        icon: 6
-                                    });
-                                    obj.update({
-                                        UserName: value
-                                    });
-                                } else {
-                                    layer.alert("修改失败", {
-                                        icon: 6
-                                    });
-                                }
-                            }
-                        });
+                            "/admin/comic_cate-edit",
+                            {id: obj.data.Id, enName: value, cols: "EnName"},
+                            index);
                     });
                     break;
             }
         });
     });
+
+    function post(f, url, data, index) {
+        $.ajax({
+            url: url,
+            dataType: 'JSON',
+            method: 'POST',
+            data: data,
+            success: function (data) {
+                if (data.msg === "OK") {
+                    layer.alert("修改成功", {
+                        icon: 6
+                    });
+                    layer.close(index);
+                    f();
+                } else {
+                    layer.alert("修改失败", {
+                        icon: 6
+                    });
+                }
+            }
+        });
+    }
 </script>
 </html>
