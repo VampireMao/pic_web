@@ -30,7 +30,7 @@ func UserList(pageSize, page int) ([]*UserModel, int64) {
 	total, _ := query.Count()
 
 	data := make([]*UserModel, 0)
-	query.OrderBy("-user_id").Limit(pageSize, offset).All(&data)
+	query.Limit(pageSize, offset).All(&data)
 
 	return data, total
 }

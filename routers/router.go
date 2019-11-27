@@ -16,4 +16,9 @@ func init() {
 	beego.Router("/admin/user-list", &controllers.AdminController{}, "Post:UserList")
 	beego.Router("/admin/user-edit", &controllers.AdminController{}, "Post:UserEdit")
 	beego.Router("/admin/user-delete", &controllers.AdminController{}, "Post:DeleteUser")
+
+	// ComicCate
+	beego.Router("/admin/comic_cate-list", &controllers.AdminController{}, "Get:ComicCateListView")
+	beego.Router("/admin/comic_cate-list", &controllers.AdminController{}, "Post:ComicCateList")
+	beego.Router("/admin/comic_cate-edit", &controllers.AdminController{}, "Post:ComicCateEdit")
 }

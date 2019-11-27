@@ -38,8 +38,8 @@ func GetComicCateByName(comicCateName string) ComicCategoryModel {
 	return user
 }
 
-func UpdateComicCate(user *ComicCategoryModel) error {
+func UpdateComicCate(user *ComicCategoryModel, cols string) error {
 	o := orm.NewOrm()
-	_, err := o.Update(user, "ZhName")
+	_, err := o.Update(user, cols)
 	return err
 }
