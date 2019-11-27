@@ -2,27 +2,84 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"pic_web/models"
+	"xcms/consts"
 )
 
 type AdminController struct {
 	beego.Controller
 }
 
-type WelcomeController struct {
-	beego.Controller
-}
-
-func (c *AdminController) Get() {
+func (c *AdminController) Index() {
 	c.Data["Title"] = "漫画屋 - 后台管理"
 	c.TplName = "admin/index.html"
 }
 
-func (c *AdminController) Post() {
-	println(c.Ctx.Request.URL.Path)
-	println(c.Ctx.Request.Host)
+func (c *AdminController) UserListView() {
+	c.Data["Title"] = "欢迎页"
+	c.TplName = "admin/user/user-list.html"
 }
 
-func (c *WelcomeController) Get() {
+func (c *AdminController) UserList() {
+	page, _ := c.GetInt("page", 1)
+	limit, _ := c.GetInt("limit", 5)
+	res, count := models.UserList(limit, page)
+	r := &models.ListJsonResult{consts.JRCodeSucc, "OK", count, res}
+	c.Data["json"] = r
+	c.ServeJSON()
+}
+
+func (c *AdminController) Welcome() {
 	c.Data["Title"] = "欢迎页"
 	c.TplName = "admin/welcome.html"
+}
+
+func (c *AdminController) UserEdit() {
+	userId, _ := c.GetInt("UserId", 0)
+	cols := c.GetString("cols")
+	u := models.UserModel{
+		UserId:   userId,
+		UserName: c.GetString("UserName"),
+	}
+	err := models.UpdateUser(&u, cols)
+	var r *models.JsonResult
+	if err != nil {
+		r = &models.JsonResult{
+			Code: consts.JRCodeFailed,
+			Msg:  "Error",
+			Data: err,
+		}
+	} else {
+		r = &models.JsonResult{
+			Code: consts.JRCodeSucc,
+			Msg:  "OK",
+			Data: nil,
+		}
+	}
+	c.Data["json"] = r
+	c.ServeJSON()
+}
+
+func (c *AdminController) DeleteUser() {
+	userId, _ := c.GetInt("UserId")
+	u := models.UserModel{
+		UserId: userId,
+	}
+	err := models.DeleteUser(&u)
+	var r *models.JsonResult
+	if err != nil {
+		r = &models.JsonResult{
+			Code: consts.JRCodeFailed,
+			Msg:  "Error",
+			Data: err,
+		}
+	} else {
+		r = &models.JsonResult{
+			Code: consts.JRCodeSucc,
+			Msg:  "OK",
+			Data: nil,
+		}
+	}
+	c.Data["json"] = r
+	c.ServeJSON()
 }
