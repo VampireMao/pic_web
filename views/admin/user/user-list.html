@@ -42,7 +42,9 @@
 </script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="Add">新增</button>
+        <button class="layui-btn layui-btn-sm" lay-event="Add" onclick="xadmin.open('新增用户','/admin/add-user',500,450)">
+            新增
+        </button>
     </div>
 </script>
 <script>
@@ -66,16 +68,10 @@
             ]]
         });
 
-        table.on('toolbar(test)', function (obj) {
-            if (obj.event === "Add") {
-                layer.msg("新增");
-            }
-        });
-
         table.on('tool(test)', function (obj) {
             switch (obj.event) {
                 case 'del':
-                    layer.confirm('真的删除行么', function(index){
+                    layer.confirm('真的删除行么', function (index) {
                         layer.close(index);
                         $.ajax({
                             url: '/admin/user-delete',
