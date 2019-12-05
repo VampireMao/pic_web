@@ -131,7 +131,11 @@ func (c *AdminController) ComicCateEdit() {
 	c.ServeJSON()
 }
 
-func (c *AdminController) AddUser() {
+func (c *AdminController) AddUserView() {
 	c.Data["Title"] = "新增用户"
 	c.TplName = "admin/user/admin-add.html"
+}
+
+func (c *AdminController) AddUser() {
+
 }
