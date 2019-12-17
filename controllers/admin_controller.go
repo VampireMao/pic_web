@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"pic_web/models"
-	"xcms/consts"
 )
 
 type AdminController struct {
@@ -24,7 +23,7 @@ func (c *AdminController) UserList() {
 	page, _ := c.GetInt("page", 1)
 	limit, _ := c.GetInt("limit", 5)
 	res, count := models.UserList(limit, page)
-	r := &models.ListJsonResult{consts.JRCodeSucc, "OK", count, res}
+	r := &models.ListJsonResult{models.JRCodeSucc, "OK", count, res}
 	c.Data["json"] = r
 	c.ServeJSON()
 }
@@ -45,13 +44,13 @@ func (c *AdminController) UserEdit() {
 	var r *models.JsonResult
 	if err != nil {
 		r = &models.JsonResult{
-			Code: consts.JRCodeFailed,
+			Code: models.JRCodeFailed,
 			Msg:  "Error",
 			Data: err,
 		}
 	} else {
 		r = &models.JsonResult{
-			Code: consts.JRCodeSucc,
+			Code: models.JRCodeSucc,
 			Msg:  "OK",
 			Data: nil,
 		}
@@ -69,13 +68,13 @@ func (c *AdminController) DeleteUser() {
 	var r *models.JsonResult
 	if err != nil {
 		r = &models.JsonResult{
-			Code: consts.JRCodeFailed,
+			Code: models.JRCodeFailed,
 			Msg:  "Error",
 			Data: err,
 		}
 	} else {
 		r = &models.JsonResult{
-			Code: consts.JRCodeSucc,
+			Code: models.JRCodeSucc,
 			Msg:  "OK",
 			Data: nil,
 		}
@@ -93,7 +92,7 @@ func (c *AdminController) ComicCateList() {
 	page, _ := c.GetInt("page", 1)
 	limit, _ := c.GetInt("limit", 5)
 	res, count := models.ComicCateList(limit, page)
-	r := &models.ListJsonResult{consts.JRCodeSucc, "OK", count, res}
+	r := &models.ListJsonResult{models.JRCodeSucc, "OK", count, res}
 	c.Data["json"] = r
 	c.ServeJSON()
 }
@@ -115,13 +114,13 @@ func (c *AdminController) ComicCateEdit() {
 	var r *models.JsonResult
 	if err != nil {
 		r = &models.JsonResult{
-			Code: consts.JRCodeFailed,
+			Code: models.JRCodeFailed,
 			Msg:  "Error",
 			Data: err,
 		}
 	} else {
 		r = &models.JsonResult{
-			Code: consts.JRCodeSucc,
+			Code: models.JRCodeSucc,
 			Msg:  "OK",
 			Data: nil,
 		}
